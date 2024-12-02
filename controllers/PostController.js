@@ -29,7 +29,20 @@ const PostController = {
         } catch (error) {
             console.error(error);
         }
-    },   
+    },  
+    async getAllPostsAndUsers(req, res) {
+        try {
+           const posts = await Post.find(
+            User.populate(posts, { path:"user"}, function (err, posts) {
+                res.status(200).send(posts);}
+            
+           )
+
+        )
+        } catch (error) {
+            console.error(error);
+        }
+    }, 
     async create(req,res){
         try {
             const newPost = await Post.create(req.body)
