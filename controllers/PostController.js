@@ -22,9 +22,13 @@ const PostController = {
     async update(req, res) {
         try {
           const post = await Post.findByIdAndUpdate(
-            req.params._id, //id del post que quiero actualizar
-            req.body,// el objeto con los datos a actualizar 
-            { new: true }// para que el post de la respuesta sea el actualizado
+            req.params._id,
+            { ...req.body, 
+                // userId: req.user._id 
+            },
+            {
+              new: true,
+            }
         )
           res.send({ message: "post successfully updated", post });
         } catch (error) {
