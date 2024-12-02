@@ -21,7 +21,16 @@ const PostController = {
         } catch (error) {
           console.log(error);
         }
-      }
+      },
+      async getAllPosts(req, res) {
+        try {
+           const posts = await Post.find()
+           res.send(posts)
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     
     
 }

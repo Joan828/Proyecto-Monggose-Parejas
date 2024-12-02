@@ -4,5 +4,7 @@ const router = express.Router()
 
 router.get("/getPostById/:_id", PostController.getPostById)
 router.get("/getPostByTitle/:title", PostController.getPostByTitle)
+router.get("/getAllPosts", PostController.getAllPosts)
+
 
 module.exports = router
