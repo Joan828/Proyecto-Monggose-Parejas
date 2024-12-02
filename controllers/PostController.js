@@ -1,15 +1,19 @@
 const Post = require("../models/Post")
 
 const PostController = {
-    async create(req,res){
+    async create(req, res) {
         try {
-            const newPost = await Post.create(req.body)
-        res.status(201).send({message:"New post successfully created",newPost})
+          const post = await Post.create({
+            ...req.body,
+            status: "pending",
+            deliveryDate: new Date().setDate(new Date().getDate() + 2),
+            userId: req.user._id,
+          });
+          res.status(201).send(post);
         } catch (error) {
-            console.error(error);
-            res.status(500).send({message:"There was a problem",error})
-        } 
-    },
+          console.error(error);
+        }
+      },
     async delete(req, res) {
         try {
             const post = await Post.findByIdAndDelete(req.params._id)
@@ -24,7 +28,7 @@ const PostController = {
           const post = await Post.findByIdAndUpdate(
             req.params._id,
             { ...req.body, 
-                // userId: req.user._id 
+                userId: req.user._id 
             },
             {
               new: true,
