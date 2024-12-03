@@ -1,6 +1,7 @@
 const { JWT_SECRET } = require("../config/keys")
 const User = require("../models/User")
 const jwt = require("jsonwebtoken")
+
 const UserController = {
     async create(req,res){
         req.body.role = "user"
@@ -33,7 +34,6 @@ const UserController = {
             message: "Hubo un problema al intentar desconectar al usuario",
           });
         }
-      },
-    
+      }
 }
 module.exports = UserController
