@@ -8,6 +8,22 @@ const UserController = {
         const user = await User.create(req.body)
         res.status(201).send({message:"User successfully created",user})
     },
+    async getAllUsers(req, res) {
+      try {
+         const users = await User.find()
+         res.send(users)
+      } catch (error) {
+          console.error(error);
+      }
+  },
+  async getUserLogged(req, res) {
+    try {
+      const user = await User.findById(req.user._id,{});
+      res.status(200).send({message: "The User Logged is:", user});
+    } catch (error) {
+        console.error(error);
+    }
+},
     async login(req, res) {
         try {
             const user = await User.findOne({

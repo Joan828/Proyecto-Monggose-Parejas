@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const ObjectId = mongoose.SchemaTypes.ObjectId;
+
 const UserSchema = new mongoose.Schema(
   {
     name: String,
@@ -6,6 +8,7 @@ const UserSchema = new mongoose.Schema(
     password: String,
     birthday: Date,
     tokens: [],
+    postIds: [{ type: ObjectId, ref: 'Post' }],
     role:String
   },
   { timestamps: true }
