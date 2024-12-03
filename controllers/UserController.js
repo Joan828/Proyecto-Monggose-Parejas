@@ -24,6 +24,14 @@ const UserController = {
         console.error(error);
     }
 },
+async getInfo(req, res) {
+  try {
+    const user = await User.findById(req.user._id).populate("postIds");
+    res.send(user);
+  } catch (error) {
+    console.error(error);
+  }
+},
     async login(req, res) {
         try {
             const user = await User.findOne({
