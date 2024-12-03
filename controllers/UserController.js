@@ -16,6 +16,14 @@ const UserController = {
           console.error(error);
       }
   },
+  async getUserLogged(req, res) {
+    try {
+      const user = await User.findById(req.user.id,{});
+      res.status(200).send({message: "Showing all the users", user});
+    } catch (error) {
+        console.error(error);
+    }
+},
     async login(req, res) {
         try {
             const user = await User.findOne({
