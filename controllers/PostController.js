@@ -36,8 +36,6 @@ const PostController = {
         try {
           const post = await Post.create({
             ...req.body,
-            status: "pending",
-            deliveryDate: new Date().setDate(new Date().getDate() + 2),
             userId: req.user._id,
           });
           res.status(201).send(post);
