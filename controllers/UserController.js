@@ -18,8 +18,8 @@ const UserController = {
   },
   async getUserLogged(req, res) {
     try {
-      const user = await User.findById(req.user.id,{});
-      res.status(200).send({message: "Showing all the users", user});
+      const user = await User.findById(req.user._id,{});
+      res.status(200).send({message: "The User Logged is:", user});
     } catch (error) {
         console.error(error);
     }
