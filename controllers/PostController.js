@@ -1,4 +1,5 @@
 const Post = require("../models/Post")
+const User = require('../models/User.js');
 
 const PostController = {
 
@@ -45,11 +46,14 @@ const PostController = {
     }, 
     async create(req,res){
         try {
-            const newPost = await Post.create(req.body)
-        res.status(201).send({message:"New post successfully created",newPost})
-        } catch (error) {
-            console.error(error);
-            res.status(500).send({message:"There was a problem",error})
+          const newPost = await Post.create(req.body)                      
+          await User.findByIdAndUpdate(req.user._id, { $push: { postIds: newPost._id } })
+
+          res.status(201).send({message:"New post successfully created",newPost})
+
+        }catch (error) {
+          console.error(error);
+          res.status(500).send({message:"There was a problem",error})
         } 
     },
     async delete(req, res) {
