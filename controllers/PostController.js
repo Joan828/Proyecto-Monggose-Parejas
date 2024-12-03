@@ -56,6 +56,16 @@ const PostController = {
           res.status(500).send({message:"There was a problem",error})
         } 
     },
+    async getInfo(req, res) {
+      try {
+        const posts = await Post.find()
+        .populate("userId")
+        .populate()//Aquí va el enlace a los comentarios, cuando los tenga
+        res.send(posts);
+      } catch (error) {
+        console.error(error);
+      }
+    },
     async delete(req, res) {
         try {
             const post = await Post.findByIdAndDelete(req.params._id)
