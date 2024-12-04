@@ -4,9 +4,13 @@ const jwt = require("jsonwebtoken")
 
 const UserController = {
     async create(req,res){
+      try {
         req.body.role = "user"
         const user = await User.create(req.body)
         res.status(201).send({message:"User successfully created",user})
+      } catch (error) {
+        next(error)
+      }
     },
     async getAllUsers(req, res) {
       try {
