@@ -6,8 +6,9 @@ const PostSchema = new mongoose.Schema({
     body: String,
     userId: {
         type: ObjectId,
-        ref: 'User'
-    }
+        ref: 'User',
+    },
+    commentsIds: [{ type: ObjectId, ref: 'Comment' }]
 }, { timestamps: true });
 
 PostSchema.index({
