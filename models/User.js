@@ -10,7 +10,8 @@ const UserSchema = new mongoose.Schema(
     tokens: [],
     postIds: [{ type: ObjectId, ref: 'Post' }],
     commentIds: [{ type: ObjectId, ref: 'Comment' }],
-    role:String
+    role:String,
+    likesPostList: [{ type: ObjectId, ref: 'Post' }],
   },
   { timestamps: true }
 );

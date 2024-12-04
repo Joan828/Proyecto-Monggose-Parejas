@@ -56,8 +56,6 @@ const PostController = {
     async getInfo(req, res) {
       try {
         const posts = await Post.find()
-        .populate("userId")
-        .populate()//Aquí va el enlace a los comentarios, cuando los tenga
         res.send(posts);
       } catch (error) {
         console.error(error);
@@ -87,7 +85,27 @@ const PostController = {
         } catch (error) {
           console.error(error);
         }
+      },
+      async like(req, res) {
+        try {
+          const post = await Post.findByIdAndUpdate(
+            req.params._id,
+            { $push: { likes: req.user._id } },
+            { new: true }
+          )
+          await User.findByIdAndUpdate(
+            req.user._id,
+            { $push: { likesPostList: req.params._id } },
+            { new: true }
+          )
+    
+          res.send(post);
+        } catch (error) {
+          console.error(error);
+          res.status(500).send({ message: "There was a problem with your like" });
+        }
       }
+    
 }
 
 module.exports = PostController

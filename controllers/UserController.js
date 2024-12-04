@@ -26,7 +26,9 @@ const UserController = {
 },
 async getInfo(req, res) {
   try {
-    const user = await User.findById(req.user._id).populate("postIds");
+    const user = await User.findById(req.user._id)
+    .populate("postIds")
+    .populate("likesPostList",["title","body"])
     res.send(user);
   } catch (error) {
     console.error(error);
