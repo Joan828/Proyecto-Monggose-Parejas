@@ -98,8 +98,27 @@ const PostController = {
             { $push: { likesPostList: req.params._id } },
             { new: true }
           )
-    
-          res.send(post);
+          res.send(post)
+
+        } catch (error) {
+          console.error(error);
+          res.status(500).send({ message: "There was a problem with your like" });
+        }
+      },
+      async unLike(req, res) {
+        try {
+          const post = await Post.findByIdAndUpdate(
+            req.params._id,
+            { $pull: { likes: req.user._id } },
+            { new: true }
+          )
+          await User.findByIdAndUpdate(
+            req.user._id,
+            { $pull: { likesPostList: req.params._id } },
+            { new: true }
+          )
+          res.send(post)
+
         } catch (error) {
           console.error(error);
           res.status(500).send({ message: "There was a problem with your like" });

@@ -11,7 +11,8 @@ router.get("/getInfo", authentication, PostController.getInfo)
 router.post("/create", authentication, PostController.create)
 router.delete("/id/:_id",PostController.delete)
 router.put("/id/:_id",PostController.update)
-router.put('/like/:_id', authentication, PostController.like);
+router.put('/like/:_id', authentication, PostController.like)
+router.put('/unlike/:_id', authentication, PostController.unLike)
 
 
 module.exports = router
