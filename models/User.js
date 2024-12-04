@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema(
     birthday: Date,
     tokens: [],
     postIds: [{ type: ObjectId, ref: 'Post' }],
+    commentIds: [{ type: ObjectId, ref: 'Comment' }],
     role:String
   },
   { timestamps: true }

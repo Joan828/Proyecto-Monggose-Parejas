@@ -33,20 +33,17 @@ const PostController = {
     },  
     async getAllPostsAndUsers(req, res) {
         try {
-           const posts = await Post.find(
-            User.populate(posts, { path:"user"}, function (err, posts) {
-                res.status(200).send(posts);}
-            
-           )
-
-        )
+          const posts = await Post.find()
+          .populate("userId",["name"])
+          .populate("commentIds",["body"])
+        res.status(200).send(posts)
         } catch (error) {
             console.error(error);
         }
     }, 
     async create(req,res){
         try {
-          const newPost = await Post.create(req.body)                      
+          const newPost = await Post.create({...req.body, userId: req.user._id})                      
           await User.findByIdAndUpdate(req.user._id, { $push: { postIds: newPost._id } })
 
           res.status(201).send({message:"New post successfully created",newPost})

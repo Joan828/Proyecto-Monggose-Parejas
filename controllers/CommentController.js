@@ -4,7 +4,7 @@ const User = require("../models/User")
 
 const CommentController = {
     async create(req,res){
-        const comment = await Comment.create(req.body)
+        const comment = await Comment.create({...req.body, userId: req.user._id})
         await User.findByIdAndUpdate(req.user._id, { $push: { commentIds: comment._id } })
         await Post.findByIdAndUpdate(req.body.postId, { $push: { commentIds: comment._id } })
 
