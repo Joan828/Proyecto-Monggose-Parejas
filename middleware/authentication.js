@@ -1,6 +1,6 @@
 const User = require('../models/User.js');
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = require('../config/keys.js');
+const { JWT_SECRET } = require('../.env');
 const Post = require('../models/Post.js');
 
 const authentication = async(req, res, next) => {
