@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 
-const { MONGO_URI } = require("./keys");
+//const { MONGO_URI } = require("./keys")
+require("dotenv").config();
+const PORT = process.env.PORT || 3001;
 
 const dbConnection = async () => {
   try {
