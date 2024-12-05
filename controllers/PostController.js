@@ -3,6 +3,7 @@ const User = require('../models/User.js')
 
 const PostController = {
 
+
     async getPostById(req, res) {
         try {
             const post = await Post.findById(req.params._id)
@@ -25,20 +26,25 @@ const PostController = {
       },
       async getAllPosts(req, res) {
         try {
+          const {page=1,limit=10} = req.query
            const posts = await Post.find()
+           .sort({createdAt:-1})
+           .limit(limit)
+           .skip((page - 1) * limit);
            res.send(posts)
-        } catch (error) {
+        }  catch (error) {
             console.error(error);
         }
-    },  
+    },   
     async getAllPostsAndUsers(req, res) {
         try {
           const posts = await Post.find()
           .populate("userId",["name"])
           .populate("commentIds",["body"])
+          .sort({createdAt:-1})
         res.status(200).send(posts)
         } catch (error) {
-            console.error(error);
+          next(error)
         }
     }, 
     async create(req,res){
@@ -55,7 +61,7 @@ const PostController = {
     },
     async getInfo(req, res) {
       try {
-        const posts = await Post.find()
+        const posts = await Post.find().sort({createdAt:-1})
         res.send(posts);
       } catch (error) {
         console.error(error);
@@ -75,7 +81,7 @@ const PostController = {
           const post = await Post.findByIdAndUpdate(
             req.params._id,
             { ...req.body, 
-                // userId: req.user._id 
+                userId: req.user._id 
             },
             {
               new: true,

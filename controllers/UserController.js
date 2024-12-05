@@ -4,13 +4,17 @@ const jwt = require("jsonwebtoken")
 
 const UserController = {
     async create(req,res){
+      try {
         req.body.role = "user"
         const user = await User.create(req.body)
         res.status(201).send({message:"User successfully created",user})
+      } catch (error) {
+        next(error)
+      }
     },
     async getAllUsers(req, res) {
       try {
-         const users = await User.find()
+         const users = await User.find().sort({createdAt:-1})
          res.send(users)
       } catch (error) {
           console.error(error);

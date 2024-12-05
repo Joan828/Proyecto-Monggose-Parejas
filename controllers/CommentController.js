@@ -12,7 +12,7 @@ const CommentController = {
     },
     async getAll(req, res) {
       try {
-         const comments = await Comment.find()
+         const comments = await Comment.find().sort({createdAt:-1})
          res.send(comments)
       } catch (error) {
           console.error(error);
@@ -38,8 +38,19 @@ const CommentController = {
         console.error(error)
         res.status(500).send({ message: 'there was a problem trying to remove the comment'})
     }
-}
+},
     
+    async create(req, res) {
+        try {
+          const comment = await Comment.create({
+            ...req.body,
+            userId: req.user._id,
+          });
+          res.status(201).send(comment);
+        } catch (error) {
+          console.error(error);
+        }
+      },
 }
 
 module.exports = CommentController
