@@ -1,4 +1,4 @@
-# Proyecto-Monggose-Parejas
+# Proyecto-Mongoose-Parejas
 
 Este proyecto es el backend de una red social siendo una sucesion de endpoints que permiten el funcionamiento de una funcional y util aplicación.
 
@@ -15,14 +15,14 @@ Primero se crea una replica y se accede a ella
 
 
 
-Despues se instalan las dependencias
+Después se instalan las dependencias
 
 ```bash
   npm install
 
 ```
 
-Despues migras el proyecto
+Después migras el proyecto
 ```bash
   npx i
 
