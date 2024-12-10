@@ -1,6 +1,6 @@
 const express = require("express")
-const CommentController = require("../controllers/CommentController")
 const { authentication } = require("../middleware/authentication")
+const CommentController = require("../controllers/CommentController")
 const router = express.Router()
 
 router.post("/create", authentication, CommentController.create)

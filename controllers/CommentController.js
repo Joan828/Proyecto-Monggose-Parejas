@@ -4,11 +4,17 @@ const User = require("../models/User")
 
 const CommentController = {
     async create(req,res){
-        const comment = await Comment.create({...req.body, userId: req.user._id})
+      try {
+        const comment = await Comment.create({...req.body, userId: req.user._id})      
         await User.findByIdAndUpdate(req.user._id, { $push: { commentIds: comment._id } })
         await Post.findByIdAndUpdate(req.body.postId, { $push: { commentIds: comment._id } })
 
         res.status(201).send({message:"Comment successfully created", comment})
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: 'there was a problem trying to remove the comment'})
+      }
+ 
     },
     async getAll(req, res) {
       try {
@@ -38,19 +44,7 @@ const CommentController = {
         console.error(error)
         res.status(500).send({ message: 'there was a problem trying to remove the comment'})
     }
-},
-    
-    async create(req, res) {
-        try {
-          const comment = await Comment.create({
-            ...req.body,
-            userId: req.user._id,
-          });
-          res.status(201).send(comment);
-        } catch (error) {
-          console.error(error);
-        }
-      },
+} 
 }
 
 module.exports = CommentController
