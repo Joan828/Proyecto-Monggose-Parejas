@@ -52,11 +52,11 @@ const PostController = {
           const newPost = await Post.create({...req.body, userId: req.user._id})                      
           await User.findByIdAndUpdate(req.user._id, { $push: { postIds: newPost._id } })
 
-          res.status(201).send({message:"New post successfully created",newPost})
+          res.status(201).send({message:"Nueva publicación creada correctamente",newPost})
 
         }catch (error) {
           console.error(error);
-          res.status(500).send({message:"There was a problem",error})
+          res.status(500).send({message:"Hubo un problema",error})
         } 
     },
     async getInfo(req, res) {
@@ -70,10 +70,10 @@ const PostController = {
     async delete(req, res) {
         try {
             const post = await Post.findByIdAndDelete(req.params._id)
-            res.send({ message: 'Post deleted', post })
+            res.send({ message: 'Publicación eliminada', post })
         } catch (error) {
             console.error(error)
-            res.status(500).send({ message: 'there was a problem trying to remove the post'})
+            res.status(500).send({ message: 'Hubo un problema al intentar eliminar la publicación'})
         }
     },
     async update(req, res) {
@@ -87,7 +87,7 @@ const PostController = {
               new: true,
             }
         )
-          res.send({ message: "post successfully updated", post });
+          res.send({ message: "Publicación actualizada correctamente", post });
         } catch (error) {
           console.error(error);
         }
@@ -108,7 +108,7 @@ const PostController = {
 
         } catch (error) {
           console.error(error);
-          res.status(500).send({ message: "There was a problem with your like" });
+          res.status(500).send({ message: "Hubo un problema con tu like" });
         }
       },
       async unLike(req, res) {
@@ -127,7 +127,7 @@ const PostController = {
 
         } catch (error) {
           console.error(error);
-          res.status(500).send({ message: "There was a problem with your like" });
+          res.status(500).send({ message: "Hubo un problema con tu dislike" });
         }
       }
     

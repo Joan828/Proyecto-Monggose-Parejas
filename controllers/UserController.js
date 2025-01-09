@@ -26,7 +26,7 @@ const UserController = {
   async getUserLogged(req, res) {
     try {
       const user = await User.findById(req.user._id,{});
-      res.status(200).send({message: "The User Logged is:", user});
+      res.status(200).send({message: "El usuario conectado es:", user});
     } catch (error) {
         console.error(error);
     }

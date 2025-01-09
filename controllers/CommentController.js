@@ -9,10 +9,10 @@ const CommentController = {
         await User.findByIdAndUpdate(req.user._id, { $push: { commentIds: comment._id } })
         await Post.findByIdAndUpdate(req.body.postId, { $push: { commentIds: comment._id } })
 
-        res.status(201).send({message:"Comment successfully created", comment})
+        res.status(201).send({message:"Comentario creado correctamente", comment})
       } catch (error) {
         console.error(error);
-        res.status(500).send({ message: 'there was a problem trying to remove the comment'})
+        res.status(500).send({ message: 'Hubo un problema al intentar crear tu comentario'})
       }
  
     },
@@ -31,7 +31,7 @@ const CommentController = {
         { ...req.body},
         { new: true }
       )
-      res.send({ message: "Comment successfully updated", comment });
+      res.send({ message: "Comentario actualizado correctamente", comment });
     } catch (error) {
       console.error(error);
     }
@@ -39,10 +39,10 @@ const CommentController = {
   async delete(req, res) {
     try {
         const comment = await Comment.findByIdAndDelete(req.params._id)
-        res.send({ message: 'Comment deleted', comment })
+        res.send({ message: 'Comentario eliminado', comment })
     } catch (error) {
         console.error(error)
-        res.status(500).send({ message: 'there was a problem trying to remove the comment'})
+        res.status(500).send({ message: 'Hubo un problema al intentar eliminar tu comentario'})
     }
 } 
 }
