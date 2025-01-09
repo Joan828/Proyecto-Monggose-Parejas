@@ -2,13 +2,15 @@ require("dotenv").config()
 const JWT_SECRET = process.env.JWT_SECRET
 const User = require("../models/User")
 const jwt = require("jsonwebtoken")
+const bcrypt = require("bcryptjs")
 
 const UserController = {
-    async create(req,res){
+    async create(req,res,next){
       try {
-        req.body.role = "user"
-        const user = await User.create(req.body)
-        res.status(201).send({message:"User successfully created",user})
+        if(!req.body.password) return res.status(400).send("Rellena tu contraseña")
+          const password = bcrypt.hashSync(req.body.password,10)
+          const user = await User.create({...req.body, password:password, role:"user"})
+          res.status(201).send({message:"Usuario creado correctamente",user})
       } catch (error) {
         next(error)
       }
@@ -57,7 +59,7 @@ async getInfo(req, res) {
             if (user.tokens.length > 4) user.tokens.shift();
             user.tokens.push(token);
             await user.save();
-            res.send({ message: 'Bienvenid@ ' + user.name, token });
+            res.send({ message: 'Bienvenid@ ' + user.name, token, user });
         } catch (error) {
             console.error(error);
         }
