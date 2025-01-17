@@ -34,7 +34,7 @@ const UserController = {
 async getInfo(req, res) {
   try {
     const user = await User.findById(req.user._id)
-    // .populate("postIds",["title","likes"])
+    .populate("postIds",["title","likes"])
     .populate("likesPostList",["title","body"])
     res.send(user);
   } catch (error) {
